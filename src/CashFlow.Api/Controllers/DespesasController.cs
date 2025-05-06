@@ -1,0 +1,21 @@
+﻿using CashFlow.Application.Usecases.Despesas.Register;
+using CashFlow.Communication.Requests;
+using CashFlow.Communication.Responses;
+using Microsoft.AspNetCore.Mvc;
+
+namespace CashFlow.Api.Controllers;
+[Route("api/[controller]")]
+[ApiController]
+public class DespesasController : ControllerBase
+{
+    [HttpPost]
+    [ProducesResponseType(typeof(ResponseRegisterDespesaJson),StatusCodes.Status201Created)]
+    public IActionResult Register([FromBody] RequestRegisterDespesaJson req)
+    {
+        var useCase = new RegisterDespesaUseCase();
+        var response = useCase.Execute(req);
+
+        return Created(string.Empty,response);
+    }
+
+}
