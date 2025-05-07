@@ -26,11 +26,11 @@ public class RegisterDespesaUseCase
 
 
         
-        if (result.IsValid ==false)
+        if (result.IsValid == false)
         {
             // ira receber um fucao lambda
-            var erroMessages = result.Errors.Select(f => f.ErrorMessage).ToList();
-            throw new ErrorOnValidationException(erroMessages);
+            var errorMessages = result.Errors.Select(f => f.ErrorMessage).ToList();
+            throw new ErrorOnValidationException(errorMessages);
         }
 
 
