@@ -1,6 +1,6 @@
-﻿using CashFlow.Communication.Enums;
-using CashFlow.Communication.Requests;
+﻿using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
+using CashFlow.Exception.ExceptionsBase;
 
 namespace CashFlow.Application.Usecases.Despesas.Register;
 public class RegisterDespesaUseCase
@@ -21,19 +21,19 @@ public class RegisterDespesaUseCase
     //funcao de validaçõs
     private void Validate(RequestRegisterDespesaJson req)
     {
-        if (string.IsNullOrEmpty(req.Title))
-            throw new ArgumentException("O título é obrigatório.");
+        var validator = new RegisterDespesaValidator();
+        var result = validator.Validate(req);
 
-        if (req.Valor < 0)
-            throw new ArgumentException("O valor deve ser maior que zero.");
 
-        if (req.Data == DateTime.MinValue)
-            throw new ArgumentException("A data é obrigatória.");
+        
+        if (result.IsValid ==false)
+        {
+            // ira receber um fucao lambda
+            var erroMessages = result.Errors.Select(f => f.ErrorMessage).ToList();
+            throw new ErrorOnValidationException(erroMessages);
+        }
 
-       
 
-        var pagamentoValido = Enum.IsDefined(typeof(PagamentoType), req.Pagemento);
-        if (!pagamentoValido)
-            throw new ArgumentException("O tipo de pagamento é inválido.");
+
     }
 }
