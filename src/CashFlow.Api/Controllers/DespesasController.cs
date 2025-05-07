@@ -10,8 +10,9 @@ namespace CashFlow.Api.Controllers;
 public class DespesasController : ControllerBase
 {
     [HttpPost]
-    //[ProducesResponseType(typeof(ResponseRegisterDespesaJson), StatusCodes.Status201Created)]
-    //[ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ResponseRegisterDespesaJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
     public IActionResult Register([FromBody] RequestRegisterDespesaJson req)
     {
         try
